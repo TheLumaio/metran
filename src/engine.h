@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL2_framerate.h>
 
 class Engine;
 
@@ -33,6 +34,8 @@ public:
     int m_width;
     int m_height;
 
+    FPSmanager* m_framerate;
+
 
 	Engine()=default;
 
@@ -57,6 +60,9 @@ public:
 
         TTF_Init();
         IMG_Init(IMG_INIT_PNG|IMG_INIT_JPG);
+
+        SDL_initFramerate(m_framerate);
+        SDL_setFramerate(m_framerate, 60);
 
 	}
 
@@ -142,6 +148,7 @@ public:
             }
             SDL_RenderPresent(m_renderer);
 
+            SDL_framerateDelay(m_framerate);
         }
 
         // Do cleanup

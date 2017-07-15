@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 #include "engine.h"
 #include "image.h"
 #include "primitive.h"
@@ -33,7 +34,7 @@ struct wood {
         x(x),
         y(y)
     {
-        v = (rand()%100, 200);
+        v = (50+rand()%100);
         r = to_radians(rand()%360);
     }
 };
