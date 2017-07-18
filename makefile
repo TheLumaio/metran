@@ -12,3 +12,8 @@ $(OUT): $(OBJ)
 
 obj/%.o: src/%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
+
+clean:
+	rm obj/*
+	rm $(OUT)
+

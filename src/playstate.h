@@ -45,8 +45,8 @@ class Playstate : public Gamestate
         std::vector<tree> m_trees;
         std::vector<wood> m_wood;
 
-        Image m_treeimage;
-        Image m_woodimage;
+        Image* m_treeimage;
+        Image* m_woodimage;
 
     public:
         Playstate(Engine*);

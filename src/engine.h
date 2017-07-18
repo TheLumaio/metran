@@ -5,6 +5,7 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL2_framerate.h>
+#include "resource.h"
 
 class Engine;
 
@@ -34,10 +35,13 @@ public:
     int m_width;
     int m_height;
 
+    ResourceManager* m_resource;
     FPSmanager* m_framerate;
 
 
-	Engine()=default;
+    Engine()
+    {
+    };
 
 	void init(std::string title, int width, int height) {
         m_deltatime = 0.0;
@@ -63,6 +67,8 @@ public:
 
         SDL_initFramerate(m_framerate);
         SDL_setFramerate(m_framerate, 60);
+        
+        m_resource = new ResourceManager(m_renderer, "assets");
 
 	}
 

@@ -10,6 +10,7 @@ class Image
         SDL_Texture* m_texture;
         SDL_Rect* src;
         SDL_Rect* dest;
+        SDL_Point* origin;
         
     public:
         int width;
@@ -26,13 +27,16 @@ class Image
 
             src = new SDL_Rect{0, 0, width, height};
             dest = new SDL_Rect{0, 0, width, height};
+            
+            origin = new SDL_Point{0, 0};
 
         }
         void render(SDL_Renderer* renderer, float x, float y, float r=0, int cx=0, int cy=0, SDL_RendererFlip f=SDL_FLIP_NONE) {
             dest->x = x;
             dest->y = y;
-            //SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-            SDL_RenderCopyEx(renderer, m_texture, src, dest, (double)r, new SDL_Point{cx,cy}, f);
+            origin->x = cx;
+            origin->y = cy;
+            SDL_RenderCopyEx(renderer, m_texture, src, dest, (double)r, origin, f);
         }
 };
 
