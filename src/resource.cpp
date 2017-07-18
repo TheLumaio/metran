@@ -2,22 +2,15 @@
 
 RESOURCE_TYPE ResourceManager::getResourceType(std::string path)
 {
-    std::ifstream file;
-    std::string data((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     
-    if (
-        strncmp(data.c_str(), "\x89\x50\x4E\x47\x0D\x0A\x1A\x0A", 8) ||
-        strncmp(data.c_str(), "\xFF\xD8\xFF", 3) ||
-        strncmp(data.c_str(), "\x42\x4D", 2)
-    ) {
+    if (path.substr(path.find_last_of(".") + 1) == "png") {
         return RESOURCE_IMAGE;
     }
-    
-    if (
-        strncmp(data.c_str(), "\x4F\x67\x67\x53", 4) ||
-        strncmp(data.c_str(), "\x52\x49\x46\x46", 4)
-    ) {
-        return RESOURCE_AUDIO;
+    if (path.substr(path.find_last_of(".") + 1) == "jpg") {
+        return RESOURCE_IMAGE;
+    }
+    if (path.substr(path.find_last_of(".") + 1) == "bmp") {
+        return RESOURCE_IMAGE;
     }
     
     return RESOURCE_UNDEFINED;
@@ -50,6 +43,8 @@ void ResourceManager::loadResources(std::string folder)
                         m_images.emplace(folder+"/"+std::string(ent->d_name), new Image(folder+"/"+std::string(ent->d_name), m_renderer));
                         break;
                     case RESOURCE_AUDIO:
+                        break;
+                    case RESOURCE_UNDEFINED:
                         break;
                     default:
                         break;

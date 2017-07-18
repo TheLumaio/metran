@@ -9,6 +9,7 @@
 #include <sys/stat.h>
 #include <fstream>
 #include <streambuf>
+#include <string>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL.h>
 #include "image.h"

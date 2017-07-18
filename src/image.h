@@ -18,6 +18,11 @@ class Image
 
         Image(std::string filename, SDL_Renderer* renderer) {
             SDL_Surface* surface = IMG_Load(filename.c_str());
+            if (surface == nullptr) {
+                printf("FAILED TO CREATE IMAGE\n");
+                return;
+            }
+            
             m_texture = SDL_CreateTextureFromSurface(renderer, surface);
             
             width = surface->w;

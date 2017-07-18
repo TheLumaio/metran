@@ -1,7 +1,7 @@
 #include "editor.h"
 
 Editor::Editor(Engine* engineref) :
-    m_image("image.png", engineref->m_renderer)
+    Gamestate(engineref)
 {
     m_engine = engineref;
 
@@ -10,7 +10,6 @@ Editor::Editor(Engine* engineref) :
 
 void Editor::render(SDL_Renderer* renderer)
 {
-    m_image.render(renderer, 100, 100);
     draw_color(255, 100, 100, 255);
     draw_circle(renderer, FILLED, 100, 100, 50);
     draw_color(0, 0, 0, 255);

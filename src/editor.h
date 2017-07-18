@@ -9,7 +9,6 @@ class Editor : public Gamestate
 {
     private:
         TTF_Font* m_font;
-        Image m_image;
 
         int m_pixelsize;
 

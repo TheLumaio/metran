@@ -1,10 +1,17 @@
 #include "playstate.h"
 
 Playstate::Playstate(Engine* engine) :
-    Gamestate(engine)
+    Gamestate(engine),
+    m_text("assets/cherry.ttf", 24)
 {
     m_woodimage = m_resource->getImage("assets/wood.png");
     m_treeimage = m_resource->getImage("assets/tree.png");
+    
+    for (int i = 0; i < 500; i++)
+    {
+        m_trees.emplace_back(tree{float(rand()%1280), float(rand()%720)});
+    }
+    
 }
 
 void Playstate::update(float dt)
@@ -49,6 +56,9 @@ void Playstate::render(SDL_Renderer* renderer)
         }
         m_treeimage->render(renderer, t.x, t.y, t.r, 32, 64);
     }
+    
+    m_text.setText(m_renderer, "I think kerning might be just a bit off");
+    m_text.render(m_renderer, 50, 50);
 }
 
 void Playstate::mousepressed(Sint32 x, Sint32 y, Uint8 b)
@@ -69,7 +79,7 @@ void Playstate::mousepressed(Sint32 x, Sint32 y, Uint8 b)
                     for (int i=0; i<num; i++) {
                         int offx = -20+rand()%40;
                         int offy = -20+rand()%40;
-                        m_wood.emplace_back(wood{(float)x, (float)y});
+                        m_wood.emplace_back(wood{t.x+m_treeimage->width/2, t.y+m_treeimage->height});
                     }
                     m_trees.erase(m_trees.begin()+i);
                 }

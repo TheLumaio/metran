@@ -9,6 +9,7 @@
 #include "image.h"
 #include "primitive.h"
 #include "math.h"
+#include "text.h"
 
 struct tree {
     int health;
@@ -47,6 +48,8 @@ class Playstate : public Gamestate
 
         Image* m_treeimage;
         Image* m_woodimage;
+        
+        Text m_text;
 
     public:
         Playstate(Engine*);
