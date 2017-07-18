@@ -1,11 +1,10 @@
 #include "playstate.h"
 
-Playstate::Playstate(Engine* engine)
+Playstate::Playstate(Engine* engine) :
+    Gamestate(engine)
 {
-    m_engine = engine;
-    
-    m_woodimage = m_engine->m_resource->getImage("assets/wood.png");
-    m_treeimage = m_engine->m_resource->getImage("assets/tree.png");
+    m_woodimage = m_resource->getImage("assets/wood.png");
+    m_treeimage = m_resource->getImage("assets/tree.png");
 }
 
 void Playstate::update(float dt)

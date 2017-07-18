@@ -13,7 +13,10 @@ class Gamestate
 {
 protected:
     Engine* m_engine;
+    ResourceManager* m_resource;
+    SDL_Renderer* m_renderer;
 public:
+    Gamestate(Engine* e);
 	virtual ~Gamestate(){}
 	virtual void update(float){}
 	virtual void render(SDL_Renderer*){}
