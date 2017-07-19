@@ -40,6 +40,14 @@ void Playstate::render(SDL_Renderer* renderer)
     std::sort(m_wood.begin(), m_wood.end(), [&](wood& a, wood& b) {
             return a.y+m_woodimage->height < b.y+m_woodimage->height;
             });
+    
+    for (auto& t : m_trees)
+    {
+        // shadows
+        m_treeimage->setColorMod(0, 0, 0, 50);
+        m_treeimage->render(renderer, t.x, t.y+64, -t.r, 32, 0, SDL_RendererFlip::SDL_FLIP_VERTICAL);
+        m_treeimage->setColorMod();
+    }
 
     for (auto& w : m_wood) {
         m_woodimage->render(renderer, w.x, w.y);
@@ -57,7 +65,7 @@ void Playstate::render(SDL_Renderer* renderer)
         m_treeimage->render(renderer, t.x, t.y, t.r, 32, 64);
     }
     
-    m_text.setText(m_renderer, "I think kerning might be just a bit off");
+    m_text.setText(m_renderer, "Metran");
     m_text.render(m_renderer, 50, 50);
 }
 
@@ -71,8 +79,8 @@ void Playstate::mousepressed(Sint32 x, Sint32 y, Uint8 b)
         for (int i = m_trees.size()-1; i >= 0; i--)
         {
             auto& t = m_trees[i];
-            if (x > t.x && x < t.x+m_treeimage->width && y > t.y && y < t.y+m_treeimage->height) {
-                t.shake = 20;
+            if (x > t.x && x < t.x+m_treeimage->width && y > t.y && y < t.y+m_treeimage->height && t.shake <= 0) {
+                t.shake = 10;
                 t.health -= 1;
                 if (t.health <= 0) {
                     int num = rand()%5;
@@ -83,7 +91,6 @@ void Playstate::mousepressed(Sint32 x, Sint32 y, Uint8 b)
                     }
                     m_trees.erase(m_trees.begin()+i);
                 }
-                std::cout << "shake" << std::endl;;
                 break;
             }
         }

@@ -52,15 +52,18 @@ public:
             printf("Failed to init SDL Video\n");
             return;
         }
-    
-        if (SDL_CreateWindowAndRenderer(
-                    width,
-                    height,
-                    SDL_WINDOW_SHOWN,
-                    &m_window,
-                    &m_renderer
-                    ) != 0) {
-            printf("Failed to create window and renderer\n");
+        
+        m_window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL);
+        
+        if (m_window == nullptr) {
+            printf("Failed to create window\n");
+            SDL_Quit();
+            return;
+        }
+        
+        m_renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+        if (m_renderer == nullptr) {
+            printf("Failed to create renderer\n");
             SDL_Quit();
             return;
         }

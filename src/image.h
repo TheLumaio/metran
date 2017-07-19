@@ -43,6 +43,11 @@ class Image
             origin->y = cy;
             SDL_RenderCopyEx(renderer, m_texture, src, dest, (double)r, origin, f);
         }
+        
+        void setColorMod(Uint8 r=255, Uint8 g=255, Uint8 b=255, Uint8 a=255) {
+            SDL_SetTextureColorMod(m_texture, r, g, b);
+            SDL_SetTextureAlphaMod(m_texture, a);
+        }
 };
 
 #endif
