@@ -3,7 +3,7 @@ OBJ = $(patsubst src/%.cpp, obj/%.o, $(SRC))
 CLFAGS = --std=c++11 -w -fpermissive
 OUT = build/metran
 
-LDFLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_gfx
+LDFLAGS = -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_gfx -lGL
 LIBS = 
 CC = g++
 

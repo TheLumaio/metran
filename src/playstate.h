@@ -10,6 +10,7 @@
 #include "primitive.h"
 #include "math.h"
 #include "text.h"
+#include "camera.h"
 
 struct tree {
     int health;
@@ -50,6 +51,8 @@ class Playstate : public Gamestate
         Image* m_woodimage;
         
         Text m_text;
+        
+        Camera m_camera;
 
     public:
         Playstate(Engine*);

@@ -47,6 +47,7 @@ class Image
         void setColorMod(Uint8 r=255, Uint8 g=255, Uint8 b=255, Uint8 a=255) {
             SDL_SetTextureColorMod(m_texture, r, g, b);
             SDL_SetTextureAlphaMod(m_texture, a);
+            SDL_SetTextureBlendMode(m_texture, SDL_BLENDMODE_BLEND);
         }
 };
 

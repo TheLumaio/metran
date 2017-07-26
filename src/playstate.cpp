@@ -12,6 +12,8 @@ Playstate::Playstate(Engine* engine) :
         m_trees.emplace_back(tree{float(rand()%1280), float(rand()%720)});
     }
     
+    m_camera.setZoom(3);
+    
 }
 
 void Playstate::update(float dt)
@@ -26,10 +28,26 @@ void Playstate::update(float dt)
             w.v -= 500*dt;
         }
     }
+    
+    if (m_engine->isKeyDown(SDLK_a)) {
+        m_camera.move(500*dt, 0);
+    }
+    else if (m_engine->isKeyDown(SDLK_d)) {
+        m_camera.move(-500*dt, 0);
+    }
+    if (m_engine->isKeyDown(SDLK_w)) {
+        m_camera.move(0, 500*dt);
+    }
+    else if (m_engine->isKeyDown(SDLK_s)) {
+        m_camera.move(0, -500*dt);
+    }
 }
 
 void Playstate::render(SDL_Renderer* renderer)
 {
+    
+    m_camera.attach();
+    
     draw_color(20, 30, 20, 255);
     draw_rectangle(renderer, FILLED, 0, 0, 1280, 720);
     
@@ -65,12 +83,21 @@ void Playstate::render(SDL_Renderer* renderer)
         m_treeimage->render(renderer, t.x, t.y, t.r, 32, 64);
     }
     
-    m_text.setText(m_renderer, "Metran");
+    m_camera.detach();
+    
+    std::string fps =  "FPS: " + std::to_string(m_engine->m_framerate->rate);
+    m_text.setText(m_renderer, fps);
     m_text.render(m_renderer, 50, 50);
 }
 
 void Playstate::mousepressed(Sint32 x, Sint32 y, Uint8 b)
 {
+    auto cx = m_camera.getX();
+    auto cy = m_camera.getY();
+    
+    Sint32 dx = (-cx+x)/3;
+    Sint32 dy = (-cy+y)/3;
+    
     if (b == 3) {
         m_trees.emplace_back(tree{(float)x, (float)y});
     }
@@ -79,7 +106,7 @@ void Playstate::mousepressed(Sint32 x, Sint32 y, Uint8 b)
         for (int i = m_trees.size()-1; i >= 0; i--)
         {
             auto& t = m_trees[i];
-            if (x > t.x && x < t.x+m_treeimage->width && y > t.y && y < t.y+m_treeimage->height && t.shake <= 0) {
+            if (dx > t.x && dx < t.x+m_treeimage->width && dy > t.y && dy < t.y+m_treeimage->height && t.shake <= 0) {
                 t.shake = 10;
                 t.health -= 1;
                 if (t.health <= 0) {
@@ -98,7 +125,7 @@ void Playstate::mousepressed(Sint32 x, Sint32 y, Uint8 b)
         for (int i = m_wood.size()-1; i >= 0; i--)
         {
             auto& w = m_wood[i];
-            if (x > w.x && x < w.x+m_woodimage->width && y > w.y && y < w.y+m_woodimage->height) {
+            if (dx > w.x && dx < w.x+m_woodimage->width && dy > w.y && dy < w.y+m_woodimage->height) {
                 m_wood.erase(m_wood.begin()+i);
                 break;
             }

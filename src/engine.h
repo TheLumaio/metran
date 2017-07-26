@@ -5,6 +5,8 @@
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL2_framerate.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include "resource.h"
 
 class Engine;
@@ -183,6 +185,11 @@ public:
 
     float getDeltaTime() {
         return m_deltatime;
+    }
+    
+    bool isKeyDown(SDL_Keycode k) {
+        auto state = SDL_GetKeyboardState(NULL);
+        return state[SDL_GetScancodeFromKey(k)];
     }
 
 private:
